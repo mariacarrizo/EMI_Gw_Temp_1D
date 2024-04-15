@@ -2,13 +2,13 @@
 %%LanguageLevel: 3
 %%Title: 2Lay_Model_GS_GD
 %%Creator: Matplotlib v3.8.3, https://matplotlib.org/
-%%CreationDate: Mon Apr 15 18:16:23 2024
+%%CreationDate: Mon Apr 15 22:54:57 2024
 %%Orientation: portrait
 %%BoundingBox: 0 0 461 346
 %%HiResBoundingBox: 0.000000 0.000000 460.800000 345.600000
 %%EndComments
 %%BeginProlog
-/mpldict 9 dict def
+/mpldict 10 dict def
 mpldict begin
 /_d { bind def } bind def
 /m { moveto } _d
@@ -26,8 +26,8 @@ mpldict begin
 /FontMatrix [0.00048828125 0 0 0.00048828125 0 0] def
 /FontBBox [-2090 -948 3673 2524] def
 /FontType 3 def
-/Encoding [/minus /space /slash /zero /one /two /three /four /five /six /seven /eight /C /D /E /G /H /I /M /P /Q /S /T /V /bracketleft /bracketright /a /c /d /e /g /h /i /l /m /n /o /p /r /s /t /u /v /y] def
-/CharStrings 45 dict dup begin
+/Encoding [/minus /space /period /slash /zero /one /two /three /four /five /six /seven /eight /equal /C /D /E /G /H /I /M /P /Q /S /T /V /bracketleft /bracketright /a /c /d /e /g /h /i /l /m /n /o /p /r /s /t /u /v /y] def
+/CharStrings 47 dict dup begin
 /.notdef 0 def
 /minus{1716 0 217 557 1499 727 sc
 217 727 m
@@ -38,6 +38,14 @@ mpldict begin
 
 ce} _d
 /space{651 0 0 0 0 0 sc
+ce} _d
+/period{651 0 219 0 430 254 sc
+219 254 m
+430 254 l
+430 0 l
+219 0 l
+219 254 l
+
 ce} _d
 /slash{690 0 0 -190 690 1493 sc
 520 1493 m
@@ -268,6 +276,20 @@ ce} _d
 805 1338 738 1360 651 1360 c
 564 1360 496 1338 447 1295 c
 399 1252 375 1191 375 1114 c
+
+ce} _d
+/equal{1716 0 217 352 1499 930 sc
+217 930 m
+1499 930 l
+1499 762 l
+217 762 l
+217 930 l
+
+217 522 m
+1499 522 l
+1499 352 l
+217 352 l
+217 522 l
 
 ce} _d
 /C{1430 0 115 -29 1319 1520 sc
@@ -931,6 +953,57 @@ ce} _d
 956 1120 l
 1151 1120 l
 659 -104 l
+
+ce} _d
+end readonly def
+
+/BuildGlyph {
+ exch begin
+ CharStrings exch
+ 2 copy known not {pop /.notdef} if
+ true 3 1 roll get exec
+ end
+} _d
+
+/BuildChar {
+ 1 index /Encoding get exch get
+ 1 index /BuildGlyph get exec
+} _d
+
+FontName currentdict end definefont pop
+%!PS-Adobe-3.0 Resource-Font
+%%Creator: Converted from TrueType to Type 3 by Matplotlib.
+10 dict begin
+/FontName /DejaVuSans-Oblique def
+/PaintType 0 def
+/FontMatrix [0.00048828125 0 0 0.00048828125 0 0] def
+/FontBBox [-2080 -717 3398 2187] def
+/FontType 3 def
+/Encoding [/chi] def
+/CharStrings 2 dict dup begin
+/.notdef 0 def
+/chi{1212 0 -91 -427 1274 1121 sc
+615 -250 m
+541 133 l
+126 -427 l
+-91 -427 l
+497 365 l
+406 836 l
+390 920 331 962 228 962 c
+179 962 l
+209 1120 l
+279 1118 l
+450 1113 547 1055 568 944 c
+642 561 l
+1057 1121 l
+1274 1121 l
+686 329 l
+777 -142 l
+793 -226 852 -268 955 -268 c
+1004 -268 l
+974 -426 l
+904 -424 l
+733 -419 636 -361 615 -250 c
 
 ce} _d
 end readonly def
@@ -2563,6 +2636,68 @@ gsave
 227.579223 320.16 m
 357.468446 320.16 l
 stroke
+grestore
+gsave
+277.764 285.078 translate
+0 rotate
+/DejaVuSans-Oblique 8.33 selectfont
+0 0.485938 moveto
+/chi glyphshow
+/DejaVuSans 5.8309999999999995 selectfont
+5.30207 3.66875 moveto
+/two glyphshow
+/DejaVuSans 8.33 selectfont
+9.23844 0.485938 moveto
+/space glyphshow
+11.8857 0.485938 moveto
+/G glyphshow
+18.3392 0.485938 moveto
+/S glyphshow
+23.6256 0.485938 moveto
+/space glyphshow
+26.2728 0.485938 moveto
+/equal glyphshow
+33.2509 0.485938 moveto
+/space glyphshow
+35.8982 0.485938 moveto
+/zero glyphshow
+41.1968 0.485938 moveto
+/period glyphshow
+43.844 0.485938 moveto
+/one glyphshow
+49.1426 0.485938 moveto
+/three glyphshow
+grestore
+gsave
+277.764 267.549 translate
+0 rotate
+/DejaVuSans-Oblique 8.33 selectfont
+0 0.485938 moveto
+/chi glyphshow
+/DejaVuSans 5.8309999999999995 selectfont
+5.30207 3.66875 moveto
+/two glyphshow
+/DejaVuSans 8.33 selectfont
+9.23844 0.485938 moveto
+/space glyphshow
+11.8857 0.485938 moveto
+/G glyphshow
+18.3392 0.485938 moveto
+/D glyphshow
+24.752 0.485938 moveto
+/space glyphshow
+27.3992 0.485938 moveto
+/equal glyphshow
+34.3773 0.485938 moveto
+/space glyphshow
+37.0246 0.485938 moveto
+/zero glyphshow
+42.3232 0.485938 moveto
+/period glyphshow
+44.9704 0.485938 moveto
+/zero glyphshow
+50.269 0.485938 moveto
+/zero glyphshow
 grestore
 /DejaVuSans 12.000 selectfont
 gsave
