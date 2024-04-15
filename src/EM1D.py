@@ -424,6 +424,46 @@ def EMf_3Lay_HVP(lambd, sigma1, sigma2, sigma3, h1, h2, height, offsets, freq, f
     
     return np.hstack((Q_h, Q_v, Q_p, IP_h, IP_v, IP_p))
 
+def EMf_3Lay_HVP_d(lambd, sigma1, sigma2, sigma3, d1, d2, height, offsets, freq, filt):
+    """ Forward function for a 3-layered earth model
+    
+    Input:
+        lam : radial component of the wavenumber
+        sigma1 : electrical conductivity of 1st layer in S/m
+        sigma2 : electrical conductivity of 2nd layer in S/m
+        sigma3 : electrical conductivity of 3rd layer in S/m
+        h1 : thickness of 1st layer in m
+        h2 : thickness of 2nd layer in m
+        height : height of the instrument above ground in m
+        offsets : coil separation in m
+        freq : frequency in Hertz
+        filt : filter to perform the hankel transform
+        
+    Output:
+        data : vector with the Quadrature (Q) and In-phase (IP) components of the 
+               measurements for the H, V and P coil orientations as
+              [Q_H, Q_V, Q_P, IP_H, IP_V, IP_P]
+              
+    """
+    h1 = d1
+    h2 = d2 - h1
+    # Calculate reflection coefficient
+    R0 = R0_3Lay(lambd, sigma1, sigma2, sigma3, h1, h2, freq)
+    # Calculate mutual impedance ratios for each coil-coil geometry
+    Z_h = Z_H(s=offsets, R_0= R0, lambd=lambd, a=height, filt=filt)
+    Z_v = Z_V(s=offsets, R_0= R0, lambd=lambd, a=height, filt=filt)
+    Z_p = Z_P(s=offsets+0.1, R_0= R0, lambd=lambd, a=height, filt=filt)
+    # Obtain quadratures
+    Q_h = np.abs(Z_h.imag)
+    Q_v = np.abs(Z_v.imag)
+    Q_p = np.abs(Z_p.imag)
+    # Obtain in-phases
+    IP_h = np.abs(Z_h.real)
+    IP_v = np.abs(Z_v.real)
+    IP_p = np.abs(Z_p.real)
+    
+    return np.hstack((Q_h, Q_v, Q_p, IP_h, IP_v, IP_p))
+
 def EMf_3Lay_HVP_Q(lambd, sigma1, sigma2, sigma3, h1, h2, height, offsets, freq, filt):
     """ Forward function for a 2-layered earth model
     
@@ -568,6 +608,46 @@ class EMf_3Lay_Opt_HVP(pg.Modelling):
     def createStartModel(self, dataVals):
         thk_ini = [2,2] # Thicknesses in m
         sig_ini =  [50/1000, 50/1000, 50/1000] # conductivities in S/m
+        m0 = sig_ini + thk_ini
+        return np.array(m0)
+
+class EMf_3Lay_Opt_HVP_cons(pg.Modelling):
+    def __init__(self, lambd, height, offsets, freq, filt, sigma1, sigma3):
+        """ Class to Initialize the model for Gradient descent inversion
+        using the quadrature (Q) and in-phase (IP) components of the measurements
+        
+        Input:
+            lambd : radial component of the wavenumber
+            height : height of the instrument above ground in m
+            offsets : coil separation in m
+            freq : frequency in Hertz
+            filt : filter to perform the hankel transform
+        """
+        super().__init__()        
+        self.lambd = lambd
+        self.height = height
+        self.offsets = offsets
+        self.freq = freq
+        self.filt = filt
+        self.sigma1 = sigma1
+        self.sigma3 = sigma3
+    def response(self, m):
+        lambd = self.lambd
+        height = self.height
+        offsets = self.offsets
+        freq = self.freq
+        filt = self.filt
+        sigma1 = self.sigma1 # electrical conductivity of the 1st layer in S/m
+        sigma2 = m[0] # electrical conductivity of the 2nd layer in S/m
+        sigma3 = self.sigma3 # electrical conductivity of the 3rd layer in S/m
+        h1 = m[1] # thickness of 1st layer in m
+        h2 = m[2] # thickness of 2nd layer in m
+        # Perform forward function
+        Z = EMf_3Lay_HVP(lambd, sigma1, sigma2, sigma3, h1, h2, height, offsets, freq, filt)
+        return Z               
+    def createStartModel(self, dataVals):
+        thk_ini = [2, 2] # Thicknesses in m
+        sig_ini =  [50/1000] # conductivities in S/m
         m0 = sig_ini + thk_ini
         return np.array(m0)
     
