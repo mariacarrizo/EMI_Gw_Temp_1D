@@ -410,4 +410,33 @@ class EMf_3Lay_Opt_HVP_cons(pg.Modelling):
         m0 = sig_ini + thk_ini
         return np.array(m0)
     
+def ErrorSpace_3Lay(m_est, data_true, conds, thicks, max_err=0.1):
+    # Evaluate only conductivity and thickness of middle layer
+    
+    err = []
+    models_below_err = []
+    
+    for c2 in conds:
+        for t1 in thicks: 
+            for t2 in thicks:
+                m = [m_est[0], c2, m_est[2], t1, t2]
+                data_est_pos = EMf_3Lay_HVP(lambd = lambd,
+                                            sigma1=m_est[0],
+                                            sigma2=c2,
+                                            sigma3=m_est[2],
+                                            h1=t1,
+                                            h2=t2, 
+                                            height=height,
+                                            offsets=offsets,
+                                            freq=freq,
+                                            filt=filt) 
+                diff = np.abs((data_true - data_est_pos)/data_true)
+                merr = np.sum(diff)/len(data_true)
+
+                if merr < max_err:
+                    err.append(merr)       
+                    models_below_err.append(m)
+    
+    return models_below_err, err
+    
 

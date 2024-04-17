@@ -67,8 +67,60 @@ def PlotErrorSpace_2Lay(model, model_est, err, models_err, depthmax=10):
     ax.set_ylabel('$h_1$ [m]', fontsize=8)
     ax.legend()
     ax.tick_params(axis='both',labelsize=9)
-    #ax[0].tick_params(axis='both',labelsize=9)
+
     clb = fig.colorbar(cntr1, ax=ax)
     clb.ax.set_title('RMS Error %')
     clb.ax.tick_params(labelsize=9)
+    
+def PlotErrorSpace_3Lay(model, model_est, err, models_err, depthmax=10):
+      
+    fig, axs = plt.subplots()
+    
+    x = models_err[:,4] # thickness of 2 layer
+    y = models_err[:,3] # thickness of 1 layer
+    z = err
+    
+    ngridx = 100
+    ngridy = 200
+    
+    # Create grid values first.
+    xi = np.linspace(np.min(x), np.max(x), ngridx)
+    yi = np.linspace(np.min(y), np.max(y), ngridy)
+
+    # Linearly interpolate the data (x, y) on a grid defined by (xi, yi).
+    triang = tri.Triangulation(x, y)
+    interpolator = tri.LinearTriInterpolator(triang, z)
+    Xi, Yi = np.meshgrid(xi, yi)
+    zi = interpolator(Xi, Yi)
+
+    my_cmap = copy.copy(matplotlib.cm.get_cmap("RdBu_r")) # copy the default cmap
+    my_cmap.set_bad('w')
+
+    axs.contour(xi, yi, zi*100, levels=14, linewidths=0.5, colors='k', )
+    cntr1 = axs.contourf(xi, yi, zi*100, levels=14, cmap=my_cmap)
+    axs.plot(x, y, '.k', ms=1)
+    axs.set(xlim=(2.5,3), ylim=(0.5,1.5))
+    axs.scatter(model_est[4], model_est[3],
+                 marker ='^', c='y', label='Estimated model')
+    axs.set_xlabel('$h_2$ [m]', fontsize=8)
+    axs.set_ylabel('$h_1$ [m]', fontsize=8)
+    axs.legend(fontsize=8)
+    axs.tick_params(axis='both',labelsize=8)
+    
+    x = models_err[:,1]*1000  # resistivity of second
+    y = models_err[:,3] # thickness of 1 layer
+   
+    # Create grid values first.
+    xi = np.linspace(np.min(x), np.max(x), ngridx)
+    yi = np.linspace(np.min(y), np.max(y), ngridy)
+
+    # Linearly interpolate the data (x, y) on a grid defined by (xi, yi).
+    triang = tri.Triangulation(x, y)
+    interpolator = tri.LinearTriInterpolator(triang, z)
+    Xi, Yi = np.meshgrid(xi, yi)
+    zi = interpolator(Xi, Yi)
+    
+    clb = fig.colorbar(cntr1, ax=axs)
+    clb.ax.set_title('RMSE %', fontsize=8)
+    clb.ax.tick_params(labelsize=8)
     
