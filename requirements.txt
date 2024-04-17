@@ -1,0 +1,7 @@
+numpy
+empymod
+scipy
+joblib
+pandas
+itertools
+matplotlib
