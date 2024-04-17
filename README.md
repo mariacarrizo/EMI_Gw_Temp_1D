@@ -1,7 +1,7 @@
 # EMI_Gw_Temp_1D
 An analysis of 1D EMI measurements for changes in groundwater temperature
 
-This repo contains the implementation of the algorithms shown in: [The potential of the electromagnetic induction method to monitor temperature changes in the near-surface][https://doi.org/10.5194/egusphere-egu24-9665].
+This repo contains the implementation of the algorithms shown in: [The potential of the electromagnetic induction method to monitor temperature changes in the near-surface](https://doi.org/10.5194/egusphere-egu24-9665).
 
 The repository includes:
 - Python codes for creating the synthetic data
