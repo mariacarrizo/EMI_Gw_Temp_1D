@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.tri as tri
 from utils import rel_diff
 
 def PlotModelData(model, depths, data, ax=None, model_name='', model_style='k', data_style='.', data_name=''):
